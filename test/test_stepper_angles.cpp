@@ -8,7 +8,7 @@ public:
     PositionalStepper* stepper_ {nullptr};
 
     void setup() override {
-        stepper_ = new PositionalStepper{4098, 0, 1, 2, 3};
+        stepper_ = new PositionalStepper{2048, 1, 1, 1, 1};
         stepper_->SetSpeed(5);
     }
 
