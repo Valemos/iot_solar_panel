@@ -1,39 +1,33 @@
 #include <Arduino.h>
+
 #include <Servo.h>
-#include <RF24.h>
-#include <RF24Udp.h>
 #include <PositionalStepper.h>
 
+#include <RF24.h>
+#include "../lib/LedController/LedController.h"
 
 PositionalStepper azimuth_motor{2048, 7, 6, 5, 4};
 Servo elevation_motor{};
-RF24 radio{2, 3};
 
-int position = 0;
-int direction = 1;
+LedController status_led{LED_BUILTIN};
+
+RF24 radio{2, 3};
+const byte address[6] = "00001";
+
 
 void setup() {
-    Serial.begin(9600);
-    elevation_motor.attach(8, 0, 180);
-    azimuth_motor.SetSpeed(5);
+    status_led.init();
+
+    radio.begin();
+    radio.openWritingPipe(address);
+    radio.setPALevel(RF24_PA_MIN);
+    radio.stopListening();
+
+    delay(2000);
 }
 
 void loop() {
-    azimuth_motor.SetAngle(0);
-    elevation_motor.write(position = (position + 10) % 180);
-    delay(500);
-
-    azimuth_motor.SetAngle(90);
-    elevation_motor.write(position = (position + 10) % 180);
-    delay(500);
-
-    azimuth_motor.SetAngle(180);
-    elevation_motor.write(position = (position + 10) % 180);
-    delay(500);
-
-    azimuth_motor.SetAngle(90);
-    elevation_motor.write(position = (position + 10) % 180);
-    delay(500);
+    const char text[] = "Hello World";
+    radio.write(&text, sizeof(text));
+    status_led.blink();
 }
-
-// TODO: create interrupt to send data periodically using UDP and nrf Network
