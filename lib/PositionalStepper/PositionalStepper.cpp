@@ -27,9 +27,9 @@ int PositionalStepper::GetShortestAngle(int angle) const{
         shortest_angle = shortest_angle - 360;
     }
 
-    Logger::log() << "Position: " << current_position_
-                 << " Angle: " << angle
-                 << " Shortest turn: " << shortest_angle << "\n";
+//    Logger::Log() << "Position: " << current_position_
+//                 << " Angle: " << angle
+//                 << " Shortest turn: " << shortest_angle << "\n";
 
     return shortest_angle;
 }

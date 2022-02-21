@@ -3,11 +3,7 @@
 LedController::LedController(int led_pin) : led_pin_(led_pin) {}
 
 void LedController::toggle_led() {
-    if (state_) {
-        digitalWrite(led_pin_, HIGH);
-    } else {
-        digitalWrite(led_pin_, LOW);
-    }
+    digitalWrite(led_pin_, state_ ? HIGH : LOW);
     state_ = not state_;
 }
 

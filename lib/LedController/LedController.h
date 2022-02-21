@@ -11,6 +11,6 @@ public:
     void blink() const;
 
 private:
-    int led_pin_;
+    const int led_pin_;
     bool state_{false};
 };
